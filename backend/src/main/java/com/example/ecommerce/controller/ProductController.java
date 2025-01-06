@@ -42,12 +42,17 @@ public class ProductController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PutMapping("/products/{id}")
+    public ResponseEntity<String> updateProduct(@RequestBody Product product, @PathVariable Long id) throws Exception {
+        productService.updateProduct(product, id);
+        return ResponseEntity.ok("product update success");
+    }
     // pagination starts from 0 but regular users dont like starting the count from 0 thats why its 1
     @GetMapping("/products")
     public Page<ProductListDTO> getProducts(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
         return productService.getAllProducts(page-1, size);
     }
-    @GetMapping("/products/category")
+    @GetMapping("/products/category") // change it to pageable
     public Optional<List<Product>> getProductsByCategory(@RequestParam String category) {
         return productService.getAllProductsByCategory(category);
     }

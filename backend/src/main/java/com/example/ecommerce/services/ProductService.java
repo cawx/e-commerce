@@ -45,8 +45,14 @@ public class ProductService {
             productRepository.deleteById(id);
         }
     }
-    public void updateProduct() {
-        return;
+    public void updateProduct(Product product, Long id) throws Exception {
+        Product existingProduct = productRepository.findById(id).orElseThrow(() -> new Exception("product not found with id "+id));
+        existingProduct.setTitle(product.getTitle());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setQuantity(product.getQuantity());
+        existingProduct.setCategory(product.getCategory());
+        productRepository.save(existingProduct);
     }
     public Page<ProductListDTO> getAllProducts(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
