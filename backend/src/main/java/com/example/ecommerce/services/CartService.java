@@ -1,10 +1,13 @@
 package com.example.ecommerce.services;
 
+import com.example.ecommerce.DTO.CartItemDTO;
 import com.example.ecommerce.entity.Cart;
 import com.example.ecommerce.entity.CartItem;
+import com.example.ecommerce.entity.Product;
 import com.example.ecommerce.entity.User;
 import com.example.ecommerce.repository.CartItemRepository;
 import com.example.ecommerce.repository.CartRepository;
+import com.example.ecommerce.repository.ProductRepository;
 import com.example.ecommerce.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CartService {
@@ -21,6 +25,8 @@ public class CartService {
     private CartItemRepository cartItemRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     public Cart getCart(Long userId) {
         User user = userRepository.findById(userId)
@@ -53,10 +59,22 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public List<CartItem> getCartItems(Long userid) {
+    public List<CartItemDTO> getCartItems(Long userid) {
         Cart cart = getCart(userid);
-        return cart.getCartItems();
+        List<CartItem> cartItems = cart.getCartItems();
+        return cartItems.stream().map(cartItem -> {
+            Product product = productRepository.findById(cartItem.getProductId())
+                    .orElseThrow(() -> new RuntimeException("product not found"));
+            CartItemDTO cartItemDTO = new CartItemDTO();
+            cartItemDTO.setCartItemId(cartItem.getId());
+            cartItemDTO.setProductId(product.getId());
+            cartItemDTO.setProductTitle(product.getTitle());
+            cartItemDTO.setProductPrice(product.getPrice());
+            cartItemDTO.setQuantity(cartItem.getQuantity());
+            return cartItemDTO;
+        }).collect(Collectors.toList());
     }
+
     @Transactional
     public void removeCartItem(Long userId, Long productId) {
         cartItemRepository.deleteByUserIdAndProductId(userId, productId);

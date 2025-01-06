@@ -1,5 +1,6 @@
 package com.example.ecommerce.entity;
 
+import com.example.ecommerce.util.Role;
 import jakarta.persistence.*;
 
 @Table(name = "users")
@@ -13,6 +14,9 @@ public class User {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
+
     public Long getId() {
         return id;
     }
@@ -23,6 +27,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public void setId(Long id) {
@@ -36,4 +44,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+
 }

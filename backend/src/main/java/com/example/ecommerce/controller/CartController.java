@@ -1,6 +1,7 @@
 package com.example.ecommerce.controller;
 
 import com.example.ecommerce.DTO.AddCartItemDTO;
+import com.example.ecommerce.DTO.CartItemDTO;
 import com.example.ecommerce.entity.Cart;
 import com.example.ecommerce.entity.CartItem;
 import com.example.ecommerce.services.CartService;
@@ -17,8 +18,8 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping("/cart/{userId}")
-    public ResponseEntity<List<CartItem>> getCartItems(@PathVariable Long userId) {
-        List<CartItem> cartItemList = cartService.getCartItems(userId);
+    public ResponseEntity<List<CartItemDTO>> getCartItems(@PathVariable Long userId) {
+        List<CartItemDTO> cartItemList = cartService.getCartItems(userId);
         return ResponseEntity.ok(cartItemList);
     }
 
