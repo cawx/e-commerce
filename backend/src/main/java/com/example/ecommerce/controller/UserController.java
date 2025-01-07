@@ -5,7 +5,6 @@ import com.example.ecommerce.entity.User;
 import com.example.ecommerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,5 +22,9 @@ public class UserController {
     @PostMapping("/register")
     public User register(@RequestBody User user) throws Exception {
         return userService.register(user);
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        return userService.logout();
     }
 }
