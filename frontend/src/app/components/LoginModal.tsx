@@ -8,6 +8,7 @@ const initialState = {
 };
 
 function LoginModal() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, formAction, pending] = useActionState(login, initialState);
 
   return (
@@ -23,7 +24,6 @@ function LoginModal() {
           </button>
           <Link href="/register">Create an account</Link>
         </form>
-        <p>{state.message}</p>
       </div>
     </div>
   );

@@ -21,10 +21,10 @@ export async function register(prevState: unknown, formData: FormData) {
       const json = await res.json();
       return { message: json.message || "please enter valid credentials" };
     }
-    redirect("/login");
   } catch (err) {
     return { message: "server error " + err };
   }
+  redirect("/login");
 }
 
 export async function login(prevState: unknown, formData: FormData) {
@@ -47,7 +47,6 @@ export async function login(prevState: unknown, formData: FormData) {
       const json = await res.json();
       return { message: json.message || "please enter valid credentials" };
     }
-    redirect("/");
   } catch (err) {
     return { message: "server error " + err };
   }
@@ -61,7 +60,6 @@ export async function logout() {
     });
     if (res.ok) {
       console.log("Logged out successfully!");
-      redirect("/login");
     } else {
       const err = await res.json();
       console.log(err.message || "Failed to log out");
@@ -69,4 +67,5 @@ export async function logout() {
   } catch (err) {
     console.log(err);
   }
+  redirect("/");
 }
