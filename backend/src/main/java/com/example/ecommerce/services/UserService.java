@@ -5,7 +5,6 @@ import com.example.ecommerce.entity.User;
 import com.example.ecommerce.repository.UserRepository;
 import com.example.ecommerce.util.JwtUtil;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -20,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.Map;
 
 @Service
 public class UserService {
@@ -66,10 +64,9 @@ public class UserService {
             String token = jwtUtil.generateToken(userDetails.getUsername(), role);
             ResponseCookie cookie = ResponseCookie.from("jwt", token)
                     .httpOnly(true)
-                    .secure(true)
+                    .secure(false) //true
                     .path("/")
-                    .maxAge(Duration.ofHours(10))
-                    .sameSite("Strict")
+                    .domain("localhost")
                     .build();
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, cookie.toString())

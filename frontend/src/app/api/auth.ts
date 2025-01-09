@@ -1,5 +1,4 @@
 "use server";
-
 import { redirect } from "next/navigation";
 
 const API_URL = process.env.API_URL || "http://localhost:8080";
@@ -42,7 +41,7 @@ export async function login(prevState: unknown, formData: FormData) {
     });
 
     if (res.ok) {
-      console.log("login success");
+      console.log("FE login was successful");
     } else {
       const json = await res.json();
       return { message: json.message || "please enter valid credentials" };
@@ -53,19 +52,28 @@ export async function login(prevState: unknown, formData: FormData) {
 }
 
 export async function logout() {
+  console.log("Logout function called"); // Add this to verify the function runs
   try {
     const res = await fetch(`${API_URL}/logout`, {
       method: "POST",
       credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+
+    const data = await res.text(); // Use text() instead of json() to see raw response
+    console.log("Response from server:", data);
+
     if (res.ok) {
       console.log("Logged out successfully!");
+      console.log("Cookies:", res.headers.get("set-cookie")); // Check if backend sends cookie
     } else {
-      const err = await res.json();
-      console.log(err.message || "Failed to log out");
+      console.log("Status:", res.status);
+      console.log("Status Text:", res.statusText);
     }
   } catch (err) {
-    console.log(err);
+    console.log("Error during logout:", err);
   }
   redirect("/");
 }

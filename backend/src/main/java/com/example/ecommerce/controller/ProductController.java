@@ -14,16 +14,18 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/products")
+@CrossOrigin
 public class ProductController {
     @Autowired
     private ProductService productService;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/products/add")
+    @PostMapping("/add")
     public Product addNewProduct(@RequestBody Product product) throws Exception {
         return productService.addProduct(product);
     }
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProduct(id);
@@ -32,7 +34,7 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    @PostMapping("/products/bulk")
+    @PostMapping("/bulk")
     public ResponseEntity<?> addProducts(@RequestBody List<Product> products) throws Exception {
         try {
             if (products.size() > 100) {
@@ -44,17 +46,17 @@ public class ProductController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @PutMapping("/products/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateProduct(@RequestBody Product product, @PathVariable Long id) throws Exception {
         productService.updateProduct(product, id);
         return ResponseEntity.ok("product update success");
     }
     // pagination starts from 0 but regular users dont like starting the count from 0 thats why its 1
-    @GetMapping("/products")
+    @GetMapping
     public Page<ProductListDTO> getProducts(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
         return productService.getAllProducts(page-1, size);
     }
-    @GetMapping("/products/category") // change it to pageable
+    @GetMapping("/category") // change it to pageable
     public Optional<List<Product>> getProductsByCategory(@RequestParam String category) {
         return productService.getAllProductsByCategory(category);
     }
