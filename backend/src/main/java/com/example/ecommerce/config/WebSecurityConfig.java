@@ -82,7 +82,8 @@ public class WebSecurityConfig {
     @Bean
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","OPTIONS", "PUT", "DELETE"));
         configuration.setAllowCredentials(TRUE);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

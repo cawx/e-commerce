@@ -4,23 +4,27 @@ import { useState, FormEvent } from "react";
 
 interface State {
   message: string;
+  type: "error" | "success" | "";
 }
 
 const initialState: State = {
   message: "",
+  type: "",
 };
 
 function LoginModal() {
   const [state, setState] = useState<State>(initialState);
   const [pending, setPending] = useState<boolean>(false);
 
-  const formAction = async (event: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setPending(true);
 
     const formData = new FormData(event.currentTarget);
-    const username = formData.get("username") as string;
-    const password = formData.get("password") as string;
+    const loginData = {
+      username: formData.get("username") as string,
+      password: formData.get("password") as string,
+    };
 
     try {
       const response = await fetch("http://localhost:8080/login", {
@@ -29,22 +33,26 @@ function LoginModal() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
+        body: JSON.stringify(loginData),
       });
 
-      if (response.ok) {
-        const responseData = await response.json();
-        setState({ message: "Login successful" });
-        console.log("Login successful", responseData);
-      } else {
-        const errorData = await response.json();
-        setState({ message: errorData.message || "invalid credentials" });
+      if (!response.ok) {
+        throw new Error(`login failed: status ${response.status}`);
       }
-    } catch (error) {
-      setState({ message: "login failed" });
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        setState({
+          message: "login success",
+          type: "success",
+        });
+      } else {
+        setState({
+          message: "login success",
+          type: "success",
+        });
+      }
+    } catch (err) {
+      setState({ message: `login failed: ${err}`, type: "error" });
     } finally {
       setPending(false);
     }
@@ -54,7 +62,7 @@ function LoginModal() {
     <div>
       <div>
         <h1>Login</h1>
-        <form className="flex flex-col" onSubmit={formAction}>
+        <form className="flex flex-col" onSubmit={handleLogin}>
           <input name="username" placeholder="Username" type="text" required />
           <input
             name="password"

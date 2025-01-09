@@ -26,7 +26,7 @@ export async function register(prevState: unknown, formData: FormData) {
   redirect("/login");
 }
 
-export async function login(prevState: unknown, formData: FormData) {
+export async function login(formData: FormData) {
   try {
     const res = await fetch(`${API_URL}/login`, {
       method: "POST",

@@ -5,11 +5,9 @@ import com.example.ecommerce.entity.User;
 import com.example.ecommerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @RestController
 public class UserController {
@@ -17,7 +15,6 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    @CrossOrigin(origins = "http://localhost:3000/admin", allowCredentials = "true")
     public ResponseEntity<?> login(@RequestBody AuthDTO authDTO) {
         return userService.login(authDTO);
     }

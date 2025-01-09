@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { logout } from "../api/auth";
 
 function LogoutButton() {
   const handleLogout = async () => {
