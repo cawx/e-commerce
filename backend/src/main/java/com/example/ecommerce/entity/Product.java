@@ -13,12 +13,19 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(unique = true, nullable = false)
     private String title;
+
     private String description;
     private Float price;
     private Integer quantity;
     private String category;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 
 
@@ -46,6 +53,14 @@ public class Product {
         return category;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -68,5 +83,13 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

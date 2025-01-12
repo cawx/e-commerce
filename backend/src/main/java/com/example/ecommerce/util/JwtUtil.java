@@ -2,16 +2,23 @@ package com.example.ecommerce.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
 public class JwtUtil {
 
-    Key key = Jwts.SIG.HS256.key().build();
+    private final SecretKey key;
+
+    public JwtUtil(SecretKey key) {
+        this.key = key;
+    }
 
     public String generateToken(String username, String role) {
         return Jwts.builder()

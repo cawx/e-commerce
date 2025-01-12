@@ -27,7 +27,7 @@ function Navbar() {
   ];
 
   return (
-    <nav className="font-inter sticky top-0 z-[100] bg-white">
+    <nav className="font-inter sticky top-0 z-[100] h-20 bg-white">
       <div className="flex py-6 justify-between items-center section-padding relative">
         <div className="pr-4 font-semibold text-2xl tracking-tighter ">
           <span className="">ClubPenguin</span>

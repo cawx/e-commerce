@@ -3,26 +3,30 @@ package com.example.ecommerce.controller;
 import com.example.ecommerce.DTO.ProductListDTO;
 import com.example.ecommerce.entity.Product;
 import com.example.ecommerce.services.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
+@Tag(name = "products", description = "Product management endpoints")
 public class ProductController {
     @Autowired
     private ProductService productService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
-    public Product addNewProduct(@RequestBody Product product) throws Exception {
-        return productService.addProduct(product);
+    public ResponseEntity<Product> addNewProduct(@RequestPart("product") Product product, @RequestPart("image")MultipartFile image) {
+        Product newProduct = productService.addProduct(product, image);
+        return ResponseEntity.ok(newProduct);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {

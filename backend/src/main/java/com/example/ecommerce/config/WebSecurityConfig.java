@@ -20,6 +20,9 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import static java.lang.Boolean.TRUE;
 
@@ -82,6 +85,13 @@ public class WebSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public SecretKey secretKey() throws NoSuchAlgorithmException {
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
+        keyGenerator.init(256);
+        return keyGenerator.generateKey();
     }
 
 }
