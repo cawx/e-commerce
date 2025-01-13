@@ -21,6 +21,7 @@ public class Product {
     private Float price;
     private Integer quantity;
     private String category;
+    private String brand;
 
     @Column(name = "image_url")
     private String imageUrl;
@@ -61,6 +62,10 @@ public class Product {
         return createdAt;
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -83,6 +88,10 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public void setImageUrl(String imageUrl) {

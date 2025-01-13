@@ -6,23 +6,23 @@ function Navbar() {
   const navData = [
     {
       title: "New",
-      link: "/",
+      link: "/new",
     },
     {
       title: "Rackets",
-      link: "/",
+      link: "/rackets",
     },
     {
       title: "Shoes",
-      link: "/",
+      link: "/shoes",
     },
     {
       title: "Strings",
-      link: "/",
+      link: "/strings",
     },
     {
       title: "Sale",
-      link: "/",
+      link: "/sale",
     },
   ];
 

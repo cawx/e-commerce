@@ -52,7 +52,7 @@ export async function login(formData: FormData) {
 }
 
 export async function logout() {
-  console.log("Logout function called"); // Add this to verify the function runs
+  console.log("Logout function called");
   try {
     const res = await fetch(`${API_URL}/logout`, {
       method: "POST",
@@ -62,12 +62,12 @@ export async function logout() {
       },
     });
 
-    const data = await res.text(); // Use text() instead of json() to see raw response
+    const data = await res.text();
     console.log("Response from server:", data);
 
     if (res.ok) {
       console.log("Logged out successfully!");
-      console.log("Cookies:", res.headers.get("set-cookie")); // Check if backend sends cookie
+      console.log("Cookies:", res.headers.get("set-cookie"));
     } else {
       console.log("Status:", res.status);
       console.log("Status Text:", res.statusText);

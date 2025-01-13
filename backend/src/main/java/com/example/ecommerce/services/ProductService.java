@@ -67,9 +67,15 @@ public class ProductService {
                 product.getId(),
                 product.getTitle(),
                 product.getPrice(),
-                product.getQuantity()
+                product.getBrand(),
+                product.getImageUrl()
         ));
     }
+
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
+    }
+
     public Optional<List<Product>> getAllProductsByCategory(String category) {
         return productRepository.findByCategory(category);
     }

@@ -59,6 +59,10 @@ public class ProductController {
     public Page<ProductListDTO> getProducts(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
         return productService.getAllProducts(page-1, size);
     }
+    @GetMapping("/{id}")
+    public Optional<Product> getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
+    }
     @GetMapping("/category") // change it to pageable
     public Optional<List<Product>> getProductsByCategory(@RequestParam String category) {
         return productService.getAllProductsByCategory(category);

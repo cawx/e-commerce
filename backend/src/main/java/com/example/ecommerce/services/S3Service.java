@@ -3,6 +3,7 @@ package com.example.ecommerce.services;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,8 +17,8 @@ public class S3Service {
     @Autowired
     private AmazonS3 amazonS3;
 
-    //@Value("${aws.s3.bucketName}")
-    private String bucketName = "ecommercesprng";
+    @Value("${aws.bucket.name}")
+    private String bucketName;
 
     private static final List<String> SUPPORTED_EXTENSIONS = Arrays.asList(
             ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff"

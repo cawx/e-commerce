@@ -1,19 +1,14 @@
-import React from "react";
+import { Suspense } from "react";
+import Products from "../components/Products";
 
 function page() {
   return (
     <div>
-      <ArrivalsSection />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Products />
+      </Suspense>
     </div>
   );
 }
-
-const ArrivalsSection = () => {
-  return (
-    <section className="section-padding">
-      <div>New arrivals</div>
-    </section>
-  );
-};
 
 export default page;

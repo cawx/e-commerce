@@ -4,13 +4,16 @@ public class ProductListDTO {
     private Long id;
     private String title;
     private Float price;
-    private Integer quantity;
+    private String brand;
+    private String imageUrl;
 
-    public ProductListDTO(Long id, String title, Float price, Integer quantity) {
+    public ProductListDTO(Long id, String title, Float price, String brand, String imageUrl) {
         this.id = id;
         this.title = title;
         this.price = price;
-        this.quantity = quantity;
+        this.brand = brand;
+        this.imageUrl = imageUrl;
+
     }
 
     public Long getId() {
@@ -25,8 +28,12 @@ public class ProductListDTO {
         return price;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public void setId(Long id) {
@@ -41,7 +48,11 @@ public class ProductListDTO {
         this.price = price;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
