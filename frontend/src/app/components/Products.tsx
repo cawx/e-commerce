@@ -14,29 +14,47 @@ interface ProductsResponse {
 }
 
 const getProducts = async (): Promise<Product[]> => {
-  const response = await fetch("http://localhost:8080/products", {
-    cache: "no-store",
-  });
-  const data: ProductsResponse = await response.json();
-  return data.content;
+  try {
+    const response = await fetch("http://localhost:8080/products", {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error(`failed to fetch products: ${response.statusText}`);
+    }
+
+    const data: ProductsResponse = await response.json();
+    return data.content;
+  } catch (err) {
+    throw new Error(
+      err instanceof Error ? err.message : "failed to load products"
+    );
+  }
 };
 
 export default async function Products() {
-  const products = await getProducts();
-
-  return (
-    <section className="section-padding">
-      <div className="flex gap-x-6">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            title={product.title}
-            price={product.price}
-            brand={product.brand}
-            imageUrl={product.imageUrl}
-          />
-        ))}
+  try {
+    const products = await getProducts();
+    return (
+      <section className="section-padding">
+        <div className="flex gap-x-6">
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              title={product.title}
+              price={product.price}
+              brand={product.brand}
+              imageUrl={product.imageUrl}
+            />
+          ))}
+        </div>
+      </section>
+    );
+  } catch {
+    return (
+      <div className="section-padding text-base">
+        Unable to load the products.
       </div>
-    </section>
-  );
+    );
+  }
 }

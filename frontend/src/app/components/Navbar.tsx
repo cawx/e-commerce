@@ -1,8 +1,13 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import LoginModal from "./LoginModal";
+import { AnimatePresence } from "motion/react";
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   const navData = [
     {
       title: "New",
@@ -28,10 +33,18 @@ function Navbar() {
 
   return (
     <nav className="font-inter sticky top-0 z-[100] h-20 bg-white">
+      <AnimatePresence>
+        {isOpen && (
+          <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+        )}
+      </AnimatePresence>
       <div className="flex py-6 justify-between items-center section-padding relative">
-        <div className="pr-4 font-semibold text-2xl tracking-tighter ">
+        <Link
+          href="/"
+          className="pr-4 font-semibold text-2xl tracking-tighter "
+        >
           <span className="">ClubPenguin</span>
-        </div>
+        </Link>
 
         <div className="flex justify-center absolute left-1/2 transform -translate-x-1/2">
           <ul className="flex gap-x-8">
@@ -66,6 +79,7 @@ function Navbar() {
               width={40}
               height={40}
               className=""
+              onClick={() => setIsOpen(true)}
             />
           </button>
           <button>
