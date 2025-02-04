@@ -19,8 +19,11 @@ import java.util.Optional;
 @RequestMapping("/products")
 @Tag(name = "products", description = "Product management endpoints")
 public class ProductController {
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")

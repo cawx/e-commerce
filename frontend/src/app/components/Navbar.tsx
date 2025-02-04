@@ -2,11 +2,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import LoginModal from "./LoginModal";
+import LoginModal from "./auth/LoginModal";
 import { AnimatePresence } from "motion/react";
+import CartModal from "./CartModal";
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const navData = [
     {
@@ -34,8 +36,11 @@ function Navbar() {
   return (
     <nav className="font-inter sticky top-0 z-[100] h-20 bg-white">
       <AnimatePresence>
-        {isOpen && (
-          <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+        {isAccountOpen && (
+          <LoginModal
+            isOpen={isAccountOpen}
+            onClose={() => setIsAccountOpen(false)}
+          />
         )}
       </AnimatePresence>
       <div className="flex py-6 justify-between items-center section-padding relative">
@@ -79,18 +84,24 @@ function Navbar() {
               width={40}
               height={40}
               className=""
-              onClick={() => setIsOpen(true)}
+              onClick={() => setIsAccountOpen(true)}
             />
           </button>
-          <button>
-            <Image
-              src="/ShoppingCart.svg"
-              alt=""
-              width={35}
-              height={35}
-              className=""
-            />
-          </button>
+          <div className="relative">
+            <button
+              className="relative"
+              onClick={() => setIsCartOpen(!isCartOpen)}
+            >
+              <Image
+                src="/ShoppingCart.svg"
+                alt="Shopping Cart"
+                width={35}
+                height={35}
+                className="cursor-pointer"
+              />
+            </button>
+            {isCartOpen && <CartModal />}
+          </div>
         </div>
       </div>
     </nav>

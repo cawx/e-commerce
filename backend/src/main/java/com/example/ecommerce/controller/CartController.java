@@ -3,9 +3,7 @@ package com.example.ecommerce.controller;
 import com.example.ecommerce.DTO.AddCartItemDTO;
 import com.example.ecommerce.DTO.CartItemDTO;
 import com.example.ecommerce.entity.Cart;
-import com.example.ecommerce.entity.CartItem;
 import com.example.ecommerce.services.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +12,11 @@ import java.util.List;
 @RestController
 public class CartController {
 
-    @Autowired
-    private CartService cartService;
+    private final CartService cartService;
+
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
 
     @GetMapping("/cart/{userId}")
     public ResponseEntity<List<CartItemDTO>> getCartItems(@PathVariable Long userId) {

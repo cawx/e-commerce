@@ -14,8 +14,11 @@ import java.util.UUID;
 
 @Service
 public class S3Service {
-    @Autowired
-    private AmazonS3 amazonS3;
+    private final AmazonS3 amazonS3;
+
+    public S3Service(AmazonS3 amazonS3) {
+        this.amazonS3 = amazonS3;
+    }
 
     @Value("${aws.bucket.name}")
     private String bucketName;

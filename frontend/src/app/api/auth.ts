@@ -1,4 +1,5 @@
 "use server";
+
 import { redirect } from "next/navigation";
 
 const API_URL = process.env.API_URL || "http://localhost:8080";
@@ -24,31 +25,6 @@ export async function register(prevState: unknown, formData: FormData) {
     return { message: "server error " + err };
   }
   redirect("/login");
-}
-
-export async function login(formData: FormData) {
-  try {
-    const res = await fetch(`${API_URL}/login`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: formData.get("username"),
-        password: formData.get("password"),
-      }),
-    });
-
-    if (res.ok) {
-      console.log("FE login was successful");
-    } else {
-      const json = await res.json();
-      return { message: json.message || "please enter valid credentials" };
-    }
-  } catch (err) {
-    return { message: "server error " + err };
-  }
 }
 
 export async function logout() {
