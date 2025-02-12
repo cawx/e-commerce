@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Products from "../components/Products";
+import NewProducts from "../components/NewProducts";
 
 function page() {
   return (
@@ -7,7 +7,7 @@ function page() {
       <Suspense
         fallback={<div className="section-padding text-base">Loading...</div>}
       >
-        <Products />
+        <NewProducts />
       </Suspense>
     </div>
   );

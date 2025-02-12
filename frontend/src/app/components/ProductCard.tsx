@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface CardProps {
   title: string;
@@ -9,13 +10,13 @@ interface CardProps {
 
 const ProductCard = ({ title, price, brand, imageUrl }: CardProps) => {
   return (
-    <div className="group cursor-pointer">
+    <div className="group relative cursor-pointer">
       <div className="relative aspect-square mb-3 lg:mb-4 overflow-hidden">
         <Image
           src={imageUrl}
           alt=""
           fill
-          className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
+          className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
         />
         <Image
           src="ArrowDiagonal.svg"
@@ -25,10 +26,17 @@ const ProductCard = ({ title, price, brand, imageUrl }: CardProps) => {
           className="absolute m-3 right-0"
         />
       </div>
-      <h3 className="text-h5 font-archivo uppercase mb-1 lg:mb-2">{title}</h3>
-      <div className="flex justify-between text-base font-inter">
-        <p>{brand}</p>
-        <p>{price}</p>
+      <div className="mt-4 flex justify-between font-archivo">
+        <div>
+          <h3 className="text-h6 font-extrabold uppercase">
+            <Link href="/">
+              <span aria-hidden="true" className="absolute inset-0" />
+              {title}
+            </Link>
+          </h3>
+          <p className=" text-sm text-gray-500">{brand}</p>
+        </div>
+        <p className="text-sm font-medium text-gray-900">{price}</p>
       </div>
     </div>
   );
